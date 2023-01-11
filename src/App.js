@@ -20,6 +20,12 @@ const list = [
   },
 ];
 
+function isSearched() {
+  return;
+}
+
+// Let’s approach the filter function in a different way this time. We want to define the filter argument, which is the function passed to the filter function outside the ES6 class component. We don’t have access to the state of the component, so we have no access to the searchTerm property to evaluate the filter condition. This means we’ll need to pass the searchTerm to the filter function, returning a new function to evaluate the condition. This is called a higher-order function.
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -43,6 +49,7 @@ class App extends Component {
   //when we use a event handler, we get access to the synthetic React "event"
   onSearchChange = (event) => {
     this.setState({ searchTerm: event.target.value }); //we add the value to the state
+    //important to note that the sibling properties(in this case 'list') of the state object are preserved
   };
 
   render() {
@@ -50,6 +57,7 @@ class App extends Component {
       <div className="App">
         <form>
           <input type="text" onChange={this.onSearchChange} />
+          {/* The function is bound to the component so it has to be a class method */}
         </form>
         {this.state.list.map((item) => (
           <div key={item.objectID}>
